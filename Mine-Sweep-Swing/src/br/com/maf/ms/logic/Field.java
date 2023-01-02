@@ -38,27 +38,24 @@ public class Field {
 		open = false;
 	}
 	
-	boolean openField() {
+	public boolean openField() {
 		if(!open && !marked) {
-
 			if (mineField) {
 				notifyObservers(FieldEvent.EXPLODE);
 				return true;
 			}
-			
 			// Will make an event trigger
 			setIsOpen(true);
 			
 			if (safeNeighbours()) {
 				neighbours.forEach(c -> c.openField());
 			}
-
 			return true;
 		}
 		return false;
 	}
 	
-	void switchMarked() {
+	public void switchMarked() {
 		if(!open) {
 			marked = !marked;
 			
@@ -73,7 +70,8 @@ public class Field {
 	boolean IgnoreBombAndOpen() {
 		this.setMarked(false);
 		if(!open) {
-			setIsOpen(true);
+			open = true;
+			notifyObservers(FieldEvent.EXPLODE);
 		}
 		return open;
 	}
@@ -81,8 +79,8 @@ public class Field {
 	boolean addNeighbour(Field vizinho) {
 		
 		// Board limitations
-		boolean lineWithinBoard = vizinho.line <= 30 && vizinho.line >= 0;
-		boolean columnWithinBoard = vizinho.column <= 30 && vizinho.column >= 0;
+		boolean lineWithinBoard = vizinho.line <= 99 && vizinho.line >= 0;
+		boolean columnWithinBoard = vizinho.column <= 99 && vizinho.column >= 0;
 		boolean campWithinBoard = lineWithinBoard && columnWithinBoard;
 		
 		// Check neighbour location
@@ -161,10 +159,15 @@ public class Field {
 		}
 	}
 	
-	long minesAround() {
+	public long minesAround() {
+		
+		if (!isMineField()) {
 		return neighbours.stream()
 			.filter(v -> v.mineField)
 			.count();
+		}
+		
+		return 0;
 	}
 
 }

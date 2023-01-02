@@ -28,8 +28,8 @@ public class Board implements FieldObserver{
 	@Override
 	public void eventTriggered(Field f, FieldEvent e) {
 		if (e == FieldEvent.EXPLODE) {
-			showMinedFields();
 			notifyObservers(false);
+			showMinedFields();
 		} else if (reachObjective()) {
 			notifyObservers(true);
 		}

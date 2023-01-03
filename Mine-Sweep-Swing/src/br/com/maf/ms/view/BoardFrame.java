@@ -17,7 +17,11 @@ public class BoardFrame extends JPanel{
 		setFields();
 		tab.addObserver(e -> {
 			//TODO show result to user
-			
+			if (e) {
+				new ResultFrame("You won!", tab);
+			} else {
+				new ResultFrame("You lost!", tab);
+			};
 		});
 	}
 	

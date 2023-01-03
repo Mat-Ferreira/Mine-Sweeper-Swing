@@ -26,7 +26,7 @@ public class Field {
 	}
 	
 	private void notifyObservers(FieldEvent e) {
-		observers.stream()
+		observers.parallelStream()
 			.forEach(o -> o.eventTriggered(this, e));
 	}
 	
@@ -36,6 +36,7 @@ public class Field {
 		mineField = false;
 		marked = false;
 		open = false;
+		notifyObservers(FieldEvent.RESTART);
 	}
 	
 	public boolean openField() {
@@ -71,7 +72,7 @@ public class Field {
 		this.setMarked(false);
 		if(!open) {
 			open = true;
-			notifyObservers(FieldEvent.EXPLODE);
+			notifyObservers(FieldEvent.CONTROLED_EXPLODE);
 		}
 		return open;
 	}

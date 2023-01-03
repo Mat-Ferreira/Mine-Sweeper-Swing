@@ -48,12 +48,22 @@ public class FieldButton extends JButton
 		case EXPLODE:
 			applyStyleMineField();
 			break;
+		case CONTROLED_EXPLODE:
+			applyStyleMineField();
+			break;
 		case MARK_OFF:
 			applyStyleDefault();
+		case RESTART:
+			applyRestart();
 		default:
 			applyStyleDefault();
 		}
 		
+	}
+
+	private void applyRestart() {
+		setBackground(BG_DEFAULT);
+		setText("");
 	}
 
 	private void applyStyleDefault() {
